@@ -1,0 +1,63 @@
+CLASS Node
+    ATTRIBUTES
+        stopName
+        next
+
+CLASS BusRoute
+    ATTRIBUTES
+        head
+    METHODS
+        insertStop(afterStop, newStop)
+            CREATE newNode AS Node
+            newNode.stopName = newStop
+            IF head IS NULL THEN
+                head = newNode
+            ELSE
+                current = head
+                WHILE current IS NOT NULL
+                    IF current.stopName = afterStop THEN
+                        newNode.next = current.next
+                        current.next = newNode
+                        RETURN
+                    ENDIF
+                    current = current.next
+                ENDWHILE
+        deleteStop(stopName)
+            IF head.stopName = stopName THEN
+                head = head.next
+                RETURN
+            current = head
+            WHILE current.next IS NOT NULL
+                IF current.next.stopName = stopName THEN
+                    current.next = current.next.next
+                    RETURN
+                ENDIF
+                current = current.next
+            ENDWHILE
+        searchStop(stopName)
+            current = head
+            WHILE current IS NOT NULL
+                IF current.stopName = stopName THEN
+                    DISPLAY "Stop found: " + stopName
+                    RETURN
+                ENDIF
+                current = current.next
+            ENDWHILE
+            DISPLAY "Stop not found"
+        displayRoute()
+            current = head
+            WHILE current IS NOT NULL
+                DISPLAY current.stopName
+                current = current.next
+
+MAIN PROGRAM
+    CREATE route AS BusRoute
+    route.insertStop(NULL, "Depot")
+    route.insertStop("Depot", "Main Street")
+    route.insertStop("Main Street", "City Mall")
+    route.insertStop("City Mall", "Hospital")
+    route.insertStop("Hospital", "Airport")
+    route.insertStop("City Mall", "University")
+    route.deleteStop("Hospital")
+    route.displayRoute()
+    route.searchStop("Airport")

@@ -1,0 +1,20 @@
+CLASS WordCounter
+    METHODS
+        processText(paragraph)
+            words = split paragraph into tokens by spaces
+            cleanWords = for each word in words
+                         convert to lowercase
+                         remove punctuation
+            wordCountMap = new Map<String, Integer>
+            FOR EACH word IN cleanWords
+                IF wordCountMap contains word THEN
+                    increment value
+                ELSE
+                    put word with value 1
+            sortedList = sort wordCountMap entries by frequency (descending)
+            DISPLAY sortedList
+
+MAIN PROGRAM
+    INPUT paragraph
+    CREATE counter AS WordCounter
+    counter.processText(paragraph)

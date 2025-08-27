@@ -1,0 +1,60 @@
+CLASS User
+    ATTRIBUTES
+        username
+        password
+    METHODS
+        login()
+            DISPLAY "Validating user credentials..."
+            RETURN True
+
+CLASS Student EXTENDS User
+    ATTRIBUTES
+        enrolledCourse
+    METHODS
+        login()
+            CALL User.login()
+            IF username AND password are valid THEN
+                IF enrolledCourse IS NOT EMPTY THEN
+                    DISPLAY "Student login successful. Showing available exams..."
+                ELSE
+                    DISPLAY "Login failed: Student not enrolled in any course."
+            ELSE
+                DISPLAY "Login failed: Invalid credentials."
+
+CLASS Admin EXTENDS User
+    ATTRIBUTES
+        hasAdminPrivileges
+    METHODS
+        login()
+            CALL User.login()
+            IF username AND password are valid THEN
+                IF hasAdminPrivileges = True THEN
+                    DISPLAY "Admin login successful. Showing exam management tools..."
+                ELSE
+                    DISPLAY "Login failed: No admin privileges."
+            ELSE
+                DISPLAY "Login failed: Invalid credentials."
+
+MAIN PROGRAM
+    DISPLAY "Welcome to Online Exam Portal"
+    
+    PROMPT userType (Student/Admin)
+    
+    IF userType = "Student" THEN
+        CREATE studentObj AS Student
+        INPUT studentObj.username
+        INPUT studentObj.password
+        INPUT studentObj.enrolledCourse
+        CALL studentObj.login()
+    
+    ELSE IF userType = "Admin" THEN
+        CREATE adminObj AS Admin
+        INPUT adminObj.username
+        INPUT adminObj.password
+        INPUT adminObj.hasAdminPrivileges
+        CALL adminObj.login()
+    
+    ELSE
+        DISPLAY "Invalid user type."
+    
+ 

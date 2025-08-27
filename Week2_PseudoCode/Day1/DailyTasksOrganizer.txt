@@ -1,0 +1,27 @@
+CLASS DailyTasks
+    ATTRIBUTES
+        tasks AS LinkedHashMap<Integer, String>
+        taskCounter AS Integer
+    METHODS
+        addTask(description)
+            taskCounter = taskCounter + 1
+            tasks.put(taskCounter, description)
+            DISPLAY "Task " + taskCounter + " added: " + description
+        removeTask(taskId)
+            IF tasks.containsKey(taskId) THEN
+                tasks.remove(taskId)
+                DISPLAY "Task " + taskId + " removed"
+            ELSE
+                DISPLAY "Task not found"
+        viewTasks()
+            FOR EACH entry IN tasks
+                DISPLAY entry.key + " → " + entry.value
+
+MAIN PROGRAM
+    CREATE organizer AS DailyTasks
+    organizer.addTask("Check emails")
+    organizer.addTask("Prepare sales report")
+    organizer.addTask("Call client")
+    organizer.viewTasks()
+    organizer.removeTask(2)
+    organizer.viewTasks()

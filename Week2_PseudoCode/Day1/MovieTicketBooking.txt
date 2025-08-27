@@ -1,0 +1,67 @@
+CLASS Ticket
+    ATTRIBUTES
+        movieName
+        seatNumber
+        price
+        isBooked
+    METHODS
+        bookTicket()
+            SET isBooked = True
+            DISPLAY "Ticket booked for " + movieName + " Seat: " + seatNumber
+        cancelTicket()
+            SET isBooked = False
+            DISPLAY "Ticket for " + movieName + " Seat: " + seatNumber + " cancelled"
+
+CLASS Theatre
+    ATTRIBUTES
+        theatreName
+        movieSchedule
+        availableSeats
+        tickets
+    METHODS
+        issueTicket(movieName, seatNumber, price)
+            IF seatNumber IN availableSeats THEN
+                CREATE newTicket AS Ticket
+                newTicket.movieName = movieName
+                newTicket.seatNumber = seatNumber
+                newTicket.price = price
+                newTicket.bookTicket()
+                REMOVE seatNumber FROM availableSeats
+                ADD newTicket TO tickets
+                RETURN newTicket
+            ELSE
+                DISPLAY "Seat not available"
+        cancelTicket(ticket)
+            IF ticket IN tickets AND ticket.isBooked = True THEN
+                ticket.cancelTicket()
+                ADD ticket.seatNumber TO availableSeats
+            ELSE
+                DISPLAY "Invalid cancellation request"
+
+CLASS Customer
+    ATTRIBUTES
+        name
+        bookedTickets
+    METHODS
+        browseMovies(theatre)
+            DISPLAY theatre.movieSchedule
+        bookTicket(theatre, movieName, seatNumber, price)
+            ticket = theatre.issueTicket(movieName, seatNumber, price)
+            IF ticket IS NOT NULL THEN
+                ADD ticket TO bookedTickets
+        cancelTicket(theatre, ticket)
+            theatre.cancelTicket(ticket)
+            REMOVE ticket FROM bookedTickets
+
+MAIN PROGRAM
+    CREATE theatreObj AS Theatre
+    theatreObj.theatreName = "PVR"
+    theatreObj.movieSchedule = ["Avengers: Endgame - 6 PM"]
+    theatreObj.availableSeats = ["A10", "A11", "A12"]
+    
+    CREATE customerObj AS Customer
+    customerObj.name = "Ravi"
+    
+    customerObj.browseMovies(theatreObj)
+    customerObj.bookTicket(theatreObj, "Avengers: Endgame", "A12", 300)
+    customerObj.cancelTicket(theatreObj, customerObj.bookedTickets[0])
