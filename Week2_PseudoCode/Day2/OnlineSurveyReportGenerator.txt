@@ -6,8 +6,7 @@ CLASS SurveyResponse
 CLASS SurveyReport
     METHODS
         generateReport(responses)
-            averageMap = group responses BY restaurantName 
-                         AND compute average of rating
+            averageMap = compute average of rating
             DISPLAY "Average Ratings:"
             FOR EACH entry IN averageMap
                 DISPLAY entry.key + " → " + entry.value

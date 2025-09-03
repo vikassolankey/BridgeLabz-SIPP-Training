@@ -1,4 +1,4 @@
-CLASS AttendanceSystem
+CLASS Attendanc AttendanceSystem
     ATTRIBUTES
         attendance[30][30]
         totalStudents = 30
@@ -28,10 +28,10 @@ CLASS AttendanceSystem
                     DISPLAY "Student " + (student+1) + " is a defaulter with " + presentCount + " days"
 
 MAIN PROGRAM
-    CREATE system AS AttendanceSystem
-    system.markAttendance(0, 0, 1)     // Student 1 present Day 1
-    system.markAttendance(2, 0, 0)     // Student 3 absent Day 1
-    system.markAttendance(4, 9, 1)     // Student 5 present Day 10
-    system.dailySummary(9)
-    system.monthlySummary(4)
-    system.defaulterList()
+    CREATE attendance AS AttendancSystem
+ attendance.markAttendance(0, 0, 1)     // Student 1 present Day 1
+ attendance.markAttendance(2, 0, 0)     // Student 3 absent Day 1
+ attendance.markAttendance(4, 9, 1)     // Student 5 present Day 10
+ attendance.dailySummary(9)
+ attendance.monthlySummary(4)
+ attendance.defaulterList()
